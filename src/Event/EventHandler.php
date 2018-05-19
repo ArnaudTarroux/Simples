@@ -2,7 +2,7 @@
 
 namespace Strnoar\Simples\Event;
 
-use Strnoar\Simples\Aggregator\EventAggregatorsContainerInterface;
+use Strnoar\Simples\Reactor\ReactorContainerInterface;
 use Strnoar\Simples\Exceptions\NotAMiddlewareInstanceException;
 use Strnoar\Simples\Middleware\MiddlewareInterface;
 
@@ -19,23 +19,23 @@ class EventHandler implements EventHandlerInterface
     private $middlewares;
 
     /**
-     * @var EventAggregatorsContainerInterface
+     * @var ReactorContainerInterface
      */
     private $aggregatorsContainer;
 
     /**
      * EventHandler constructor.
-     * @param EventAggregatorsContainerInterface $aggregatorsContainer
+     * @param ReactorContainerInterface $aggregatorsContainer
      * @param MiddlewareInterface[] $middlewares
      * @throws NotAMiddlewareInstanceException
      */
-    public function __construct(EventAggregatorsContainerInterface $aggregatorsContainer, array $middlewares = [])
+    public function __construct(ReactorContainerInterface $aggregatorsContainer, array $middlewares = [])
     {
         $this->aggregatorsContainer = $aggregatorsContainer;
 
         foreach ($middlewares as $middleware) {
             if (!$middleware instanceof MiddlewareInterface) {
-                $message = sprintf('The middlewares must be an implementation of %s', MiddlewareInterface::class);
+                $message = \sprintf('The middlewares must be an implementation of %s', MiddlewareInterface::class);
                 throw new NotAMiddlewareInstanceException($message);
             }
 

@@ -1,19 +1,19 @@
 <?php
 
-namespace Strnoar\Simples\Aggregator;
+namespace Strnoar\Simples\Reactor;
 
 use Strnoar\Simples\Event\EventInterface;
 use Strnoar\Simples\Exceptions\AggregatorNotFoundException;
 
 /**
- * Class EventAggregatorContainer
+ * Class ReactorContainer
  * @package Event
  * @author Arnaud Tarroux <tar.arnaud@gmail.com>
  */
-class EventAggregatorsContainer implements EventAggregatorsContainerInterface
+class ReactorContainer implements ReactorContainerInterface
 {
     /**
-     * @var AggregatorInterface[][]
+     * @var ReactorInterface[][]
      */
     private $handlers = [];
 
@@ -30,7 +30,7 @@ class EventAggregatorsContainer implements EventAggregatorsContainerInterface
             return;
         }
 
-        /** @var AggregatorInterface $handler */
+        /** @var ReactorInterface $handler */
         foreach ($handlers as $handler) {
             $handler->handle($event);
         }
@@ -50,13 +50,13 @@ class EventAggregatorsContainer implements EventAggregatorsContainerInterface
 
     /**
      * @param string $eventName
-     * @return AggregatorInterface[]
+     * @return ReactorInterface[]
      * @throws AggregatorNotFoundException
      */
     public function getHandlers(string $eventName): array
     {
         if (!isset($this->handlers[$eventName])) {
-            $exceptionMessage = sprintf('%s was not found in the handlers list', $eventName);
+            $exceptionMessage = \sprintf('%s was not found in the handlers list', $eventName);
             throw new AggregatorNotFoundException($exceptionMessage);
         }
 
@@ -64,11 +64,11 @@ class EventAggregatorsContainer implements EventAggregatorsContainerInterface
     }
 
     /**
-     * @param AggregatorInterface $handler
+     * @param ReactorInterface $handler
      * @param string $eventName
      * @return void
      */
-    public function addHandler(AggregatorInterface $handler, string $eventName): void
+    public function addHandler(ReactorInterface $handler, string $eventName): void
     {
         $this->handlers[$eventName][] = $handler;
     }

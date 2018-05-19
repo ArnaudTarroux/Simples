@@ -3,10 +3,14 @@
 namespace Strnoar\Simples\Event;
 
 use PHPUnit\Framework\TestCase;
-use Strnoar\Simples\Aggregator\AggregatorInterface;
-use Strnoar\Simples\Aggregator\EventAggregatorsContainerInterface;
 use Strnoar\Simples\Middleware\MiddlewareInterface;
+use Strnoar\Simples\Reactor\ReactorContainerInterface;
 
+/**
+ * Class EventHandlerTest
+ * @package Strnoar\Simples\Event
+ * @author Arnaud Tarroux <tar.arnaud@gmail.com>
+ */
 class EventHandlerTest extends TestCase
 {
     /**
@@ -16,8 +20,8 @@ class EventHandlerTest extends TestCase
 
     private function createEventHandler(bool $withMiddlewares = false)
     {
-        $aggregator = $this->createMock(EventAggregatorsContainerInterface::class);
-        $aggregator->expects($this->once())
+        $reactor = $this->createMock(ReactorContainerInterface::class);
+        $reactor->expects($this->once())
             ->method('apply');
 
         if (true === $withMiddlewares) {
@@ -25,11 +29,11 @@ class EventHandlerTest extends TestCase
             $middleware->expects($this->once())
                 ->method('process');
 
-            $this->eventHandler = new EventHandler($aggregator, [$middleware]);
+            $this->eventHandler = new EventHandler($reactor, [$middleware]);
             return;
         }
 
-        $this->eventHandler = new EventHandler($aggregator);
+        $this->eventHandler = new EventHandler($reactor);
     }
 
     public function testHandleEventWithoutMiddleware()

@@ -1,15 +1,15 @@
 <?php
 
-namespace Strnoar\Simples\Aggregator;
+namespace Strnoar\Simples\Reactor;
 
 use Strnoar\Simples\Event\EventInterface;
 
 /**
- * Interface AggregatorInterface
+ * Interface ReactorInterface
  * @package Strnoar\Simples\Aggregator
  * @author Arnaud Tarroux <tar.arnaud@gmail.com>
  */
-interface AggregatorInterface
+interface ReactorInterface
 {
     /**
      * @param EventInterface $event

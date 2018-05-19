@@ -1,16 +1,16 @@
 <?php
 
-namespace Strnoar\Simples\Aggregator;
+namespace Strnoar\Simples\Reactor;
 
 use Strnoar\Simples\Event\EventInterface;
 use Strnoar\Simples\Exceptions\AggregatorNotFoundException;
 
 /**
- * Interface EventAggregatorsContainerInterface
+ * Interface ReactorContainerInterface
  * @package Event
  * @author Arnaud Tarroux <tar.arnaud@gmail.com>
  */
-interface EventAggregatorsContainerInterface
+interface ReactorContainerInterface
 {
     /**
      * @param string $eventName
@@ -26,15 +26,15 @@ interface EventAggregatorsContainerInterface
     public function hasHandlers(string $eventName): bool;
 
     /**
-     * @param AggregatorInterface $handler
+     * @param ReactorInterface $handler
      * @param string $eventName
      * @return void
      * @internal param EventInterface $event
      */
-    public function addHandler(AggregatorInterface $handler, string $eventName): void;
+    public function addHandler(ReactorInterface $handler, string $eventName): void;
 
     /**
-     * @return AggregatorInterface[]
+     * @return ReactorInterface[]
      * @throws AggregatorNotFoundException
      */
     public function getHandlers(string $eventName): array;
