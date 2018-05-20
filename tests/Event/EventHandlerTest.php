@@ -13,47 +13,22 @@ use Strnoar\Simples\Reactor\ReactorContainerInterface;
  */
 class EventHandlerTest extends TestCase
 {
-    /**
-     * @var EventHandlerInterface
-     */
-    private $eventHandler;
-
-    private function createEventHandler(bool $withMiddlewares = false)
+    public function testHandleEvent()
     {
         $reactor = $this->createMock(ReactorContainerInterface::class);
         $reactor->expects($this->once())
             ->method('apply');
 
-        if (true === $withMiddlewares) {
-            $middleware = $this->createMock(MiddlewareInterface::class);
-            $middleware->expects($this->once())
-                ->method('process');
+        $store = $this->createMock(EventStoreInterface::class);
+        $store->expects($this->once())
+            ->method('store');
 
-            $this->eventHandler = new EventHandler($reactor, [$middleware]);
-            return;
-        }
+        $eventHandler = new EventHandler($reactor, $store);
 
-        $this->eventHandler = new EventHandler($reactor);
-    }
-
-    public function testHandleEventWithoutMiddleware()
-    {
-        $this->createEventHandler();
         $event = $this->createMock(EventInterface::class);
         $event->method('getType');
 
-        $returnedEvent = $this->eventHandler->handle('test_event', $event);
-
-        $this->assertSame($event, $returnedEvent);
-    }
-
-    public function testHandleEventWithMiddleware()
-    {
-        $this->createEventHandler(true);
-        $event = $this->createMock(EventInterface::class);
-        $event->method('getType');
-
-        $returnedEvent = $this->eventHandler->handle('test_event', $event);
+        $returnedEvent = $eventHandler->handle('test_event', $event);
 
         $this->assertSame($event, $returnedEvent);
     }
