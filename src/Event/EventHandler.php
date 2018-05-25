@@ -3,12 +3,10 @@
 namespace Strnoar\Simples\Event;
 
 use Strnoar\Simples\Reactor\ReactorContainerInterface;
-use Strnoar\Simples\Exceptions\NotAMiddlewareInstanceException;
-use Strnoar\Simples\Middleware\MiddlewareInterface;
 
 /**
- * Class EventHandler
- * @package Strnoar\Simples\Event
+ * Class EventHandler.
+ *
  * @author Arnaud Tarroux <tar.arnaud@gmail.com>
  */
 class EventHandler implements EventHandlerInterface
@@ -25,8 +23,9 @@ class EventHandler implements EventHandlerInterface
 
     /**
      * EventHandler constructor.
+     *
      * @param ReactorContainerInterface $reactorContainer
-     * @param EventStoreInterface $eventStore
+     * @param EventStoreInterface       $eventStore
      */
     public function __construct(ReactorContainerInterface $reactorContainer, EventStoreInterface $eventStore)
     {
@@ -35,8 +34,9 @@ class EventHandler implements EventHandlerInterface
     }
 
     /**
-     * @param string $eventName
+     * @param string         $eventName
      * @param EventInterface $event
+     *
      * @return EventInterface
      */
     public function handle(string $eventName, EventInterface $event): EventInterface
