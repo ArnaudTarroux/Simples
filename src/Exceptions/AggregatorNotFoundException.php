@@ -3,8 +3,8 @@
 namespace Strnoar\Simples\Exceptions;
 
 /**
- * Class EventNotFoundException
- * @package Exceptions
+ * Class EventNotFoundException.
+ *
  * @author Arnaud Tarroux <tar.arnaud@gmail.com>
  */
 class AggregatorNotFoundException extends \Exception

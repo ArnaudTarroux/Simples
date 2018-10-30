@@ -6,8 +6,8 @@ use Strnoar\Simples\Event\EventInterface;
 use Strnoar\Simples\Exceptions\AggregatorNotFoundException;
 
 /**
- * Class ReactorContainer
- * @package Event
+ * Class ReactorContainer.
+ *
  * @author Arnaud Tarroux <tar.arnaud@gmail.com>
  */
 class ReactorContainer implements ReactorContainerInterface
@@ -18,8 +18,9 @@ class ReactorContainer implements ReactorContainerInterface
     private $handlers = [];
 
     /**
-     * @param string $eventName
+     * @param string         $eventName
      * @param EventInterface $event
+     *
      * @return EventInterface|void
      */
     public function apply(string $eventName, EventInterface $event)
@@ -40,7 +41,9 @@ class ReactorContainer implements ReactorContainerInterface
 
     /**
      * @param string $eventName
+     *
      * @return bool
+     *
      * @internal param string $event
      */
     public function hasHandlers(string $eventName): bool
@@ -50,13 +53,16 @@ class ReactorContainer implements ReactorContainerInterface
 
     /**
      * @param string $eventName
+     *
      * @return ReactorInterface[]
+     *
      * @throws AggregatorNotFoundException
      */
     public function getHandlers(string $eventName): array
     {
         if (!isset($this->handlers[$eventName])) {
             $exceptionMessage = \sprintf('%s was not found in the handlers list', $eventName);
+
             throw new AggregatorNotFoundException($exceptionMessage);
         }
 
@@ -65,8 +71,7 @@ class ReactorContainer implements ReactorContainerInterface
 
     /**
      * @param ReactorInterface $handler
-     * @param string $eventName
-     * @return void
+     * @param string           $eventName
      */
     public function addHandler(ReactorInterface $handler, string $eventName): void
     {
